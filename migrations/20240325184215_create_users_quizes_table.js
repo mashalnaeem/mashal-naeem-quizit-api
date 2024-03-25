@@ -41,6 +41,10 @@ exports.up = function(knex) {
         table.increments('id').primary();
         table.integer('quiz_id').unsigned().references('playable_quizzes.id').onDelete('CASCADE');
         table.string('question').notNullable();
+        table.string('category');
+        table.string('difficulty');
+        table.string('correct_answer');
+        table.string('incorrect_answers'); 
         table.timestamps(true, true);
       })
       .createTable('answers', function(table) {

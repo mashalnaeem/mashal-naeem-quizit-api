@@ -1,5 +1,28 @@
-const quizesData = [
-    // Science
+/**
+ * @param { import("knex").Knex } knex
+ * @returns { Promise<void> } 
+ */
+
+exports.seed = async function(knex) {
+    await knex('questions').del();
+    
+    for (const questionData of questionsData) {
+      const { incorrect_answers, ...question } = questionData;
+      const insertedQuestion = await knex('questions').insert(question).returning('*');
+      
+      const answers = incorrect_answers.map(answer => ({ answer, is_correct: false }));
+      answers.push({ answer: question.correct_answer, is_correct: true });
+      
+      for (const answerData of answers) {
+        await knex('answers').insert({
+          question_id: insertedQuestion[0].id,
+          ...answerData
+        });
+      }
+    }
+  };
+
+const questionsData = [
     { 
         category: 'Science', 
         difficulty: 'Easy', 
@@ -290,5 +313,5 @@ const quizesData = [
     
   ];
   
-  module.exports = quizesData;
+
   
