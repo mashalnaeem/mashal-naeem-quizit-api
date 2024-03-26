@@ -1,7 +1,7 @@
 const knex = require("../knexfile");
 
 // Controller function to get all quizzes of a user
-exports.getAllQuizzesByUserId = async (req, res) => {
+const getAllQuizzesByUserId = async (req, res) => {
   try {
     const { userId } = req.params;
 
@@ -10,6 +10,7 @@ exports.getAllQuizzesByUserId = async (req, res) => {
 
     // Respond with the quizzes
     res.status(200).json(quizzes);
+
   } catch (error) {
     console.error('Error fetching quizzes:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -17,7 +18,7 @@ exports.getAllQuizzesByUserId = async (req, res) => {
 };
 
 // Controller function to get one quiz of a user by quiz ID
-exports.getOneQuizByUserId = async (req, res) => {
+const getOneQuizByUserId = async (req, res) => {
   try {
     const { userId, quizId } = req.params;
 
@@ -31,8 +32,11 @@ exports.getOneQuizByUserId = async (req, res) => {
 
     // Respond with the quiz
     res.status(200).json(quiz);
+    
   } catch (error) {
     console.error('Error fetching quiz:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+module.exports = { getAllQuizzesByUserId, getOneQuizByUserId }
