@@ -1,7 +1,7 @@
-const knex = require("knex")(require("../knexfile"));
+const knex = require('knex')(require('../knexfile'));
 
 // Assuming you have a function to retrieve all quizzes
-async function getAllQuizzes(_req, res) {
+const getAllQuizzes = async(_req, res) => {
     try {
         const quizzes = await knex('quizzes').select(
             'id',
@@ -23,10 +23,10 @@ async function getAllQuizzes(_req, res) {
     }
 }
 
-async function fetchOneQuiz(req, res) {
-    const { quizId } = req.params; 
+const fetchOneQuiz = async(req, res) => {
+    const quizId  = req.params.id; 
     try {
-        const quiz = await knex('quizzes').where({ id: quizId }).first();
+        const quiz = await knex('quizzes').where({ id: quizId });
         if (!quiz) {
             return res.status(404).json({ error: 'Quiz not found' });
         }
@@ -39,4 +39,4 @@ async function fetchOneQuiz(req, res) {
 }
 
 
-modules.exports = { getAllQuizzes, fetchOneQuiz } 
+module.exports = { getAllQuizzes, fetchOneQuiz } 

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const knex = require("knex")(require("../knexfile"));
+const knex = require('knex')(require('../knexfile'));
 const { validationResult } = require('express-validator');
 
 // Handle user login
@@ -103,4 +103,57 @@ const createUser = async (req, res) => {
     }
 };
 
-module.exports = { login, getUserById, createUser }
+// Controller function to update a user
+const updateUser = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const { username, email, password } = req.body;
+
+        // Check if the user exists
+        const existingUser = await knex('users').where({ id: userId }).first();
+        if (!existingUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Update the user in the database using Knex
+        await knex('users').where({ id: userId }).update({
+            username,
+            email,
+            password
+        });
+
+        // Fetch the updated user
+        const updatedUser = await knex('users').where({ id: userId }).first();
+
+        // Respond with the updated user
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        console.error('Error updating user:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+// Controller function to delete a user
+const deleteUser = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        // Check if the user exists
+        const existingUser = await knex('users').where({ id: userId }).first();
+        if (!existingUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Delete the user from the database using Knex
+        await knex('users').where({ id: userId }).del();
+
+        // Respond with success message
+        res.status(200).json({ message: 'User deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+module.exports = { login, getUserById, createUser, updateUser, deleteUser };
+

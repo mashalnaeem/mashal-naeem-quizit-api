@@ -68,7 +68,7 @@ exports.seed = async function(knex) {
     id: 2,
     title: 'Language Quiz',
     description: 'Test your knowledge on a wide range of topics with this exciting quiz!',
-    category: 'General Knowledge',
+    category: 'Language',
     difficulty: JSON.stringify([ 'Intermediate', 'Easy', 'Hard' ]),
     num_questions: 9,
     duration_minutes: 10,

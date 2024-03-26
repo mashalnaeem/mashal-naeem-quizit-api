@@ -1,7 +1,7 @@
-const knex = require("knex")(require("../knexfile"));
+const knex = require('knex')(require('../knexfile'));
 
 // Controller function to get all quizzes of a user
-const getAllQuizzesByUserId = async (req, res) => {
+const getAllUserQuizzesById = async (req, res) => {
   try {
     const { userId } = req.params;
 
@@ -18,7 +18,7 @@ const getAllQuizzesByUserId = async (req, res) => {
 };
 
 // Controller function to get one quiz of a user by quiz ID
-const getOneQuizByUserId = async (req, res) => {
+const getOneUserQuizById = async (req, res) => {
   try {
     const { userId, quizId } = req.params;
 
@@ -39,4 +39,90 @@ const getOneQuizByUserId = async (req, res) => {
   }
 };
 
-module.exports = { getAllQuizzesByUserId, getOneQuizByUserId }
+// Controller function to create a new user quiz
+const createUserQuiz = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { title, description, category, difficulty, num_questions, duration_minutes, is_public, image_url, questions } = req.body;
+
+    // Create the new user quiz in the database
+    const newUserQuiz = await knex('user_quizzes').insert({
+      user_id: userId,
+      title,
+      description,
+      category,
+      difficulty,
+      num_questions,
+      duration_minutes,
+      is_public,
+      image_url,
+      questions
+    }).returning('*');
+
+    // Respond with the newly created user quiz
+    res.status(201).json(newUserQuiz);
+  } catch (error) {
+    console.error('Error creating user quiz:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+// Controller function to update a user quiz
+const updateUserQuiz = async (req, res) => {
+  try {
+    const { userId, quizId } = req.params;
+    const { title, description, category, difficulty, num_questions, duration_minutes, is_public, image_url, questions } = req.body;
+
+    // Check if the quiz exists
+    const existingQuiz = await knex('user_quizzes').where({ user_id: userId, id: quizId }).first();
+    if (!existingQuiz) {
+      return res.status(404).json({ message: 'Quiz not found' });
+    }
+
+    // Update the quiz in the database
+    await knex('user_quizzes').where({ user_id: userId, id: quizId }).update({
+      title,
+      description,
+      category,
+      difficulty,
+      num_questions,
+      duration_minutes,
+      is_public,
+      image_url,
+      questions
+    });
+
+    // Fetch the updated quiz
+    const updatedQuiz = await knex('user_quizzes').where({ user_id: userId, id: quizId }).first();
+
+    // Respond with the updated quiz
+    res.status(200).json(updatedQuiz);
+  } catch (error) {
+    console.error('Error updating quiz:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+// Controller function to delete a user quiz
+const deleteUserQuiz = async (req, res) => {
+  try {
+    const { userId, quizId } = req.params;
+
+    // Check if the quiz exists
+    const existingQuiz = await knex('user_quizzes').where({ user_id: userId, id: quizId }).first();
+    if (!existingQuiz) {
+      return res.status(404).json({ message: 'Quiz not found' });
+    }
+
+    // Delete the quiz from the database
+    await knex('user_quizzes').where({ user_id: userId, id: quizId }).del();
+
+    // Respond with success message
+    res.status(200).json({ message: 'Quiz deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting quiz:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+module.exports = { getAllUserQuizzesById, getOneUserQuizById, updateUserQuiz, deleteUserQuiz, createUserQuiz };
