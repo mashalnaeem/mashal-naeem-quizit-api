@@ -1,4 +1,4 @@
-const knex = require("../knexfile");
+const knex = require("knex")(require("../knexfile"));
 
 // Controller function to get all quizzes of a user
 const getAllQuizzesByUserId = async (req, res) => {

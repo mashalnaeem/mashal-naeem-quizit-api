@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const knex = require("../knexfile");
+const knex = require("knex")(require("../knexfile"));
 const { validationResult } = require('express-validator');
 
 // Handle user login

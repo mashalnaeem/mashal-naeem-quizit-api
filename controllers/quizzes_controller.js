@@ -1,4 +1,4 @@
-const knex = require("../knexfile");
+const knex = require("knex")(require("../knexfile"));
 
 // Assuming you have a function to retrieve all quizzes
 async function getAllQuizzes(_req, res) {
