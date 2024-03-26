@@ -17,7 +17,7 @@ app.use(express.json());
 
 app.use('/api/users', userRoutes);
 app.use('/api/quizzes', quizRoutes); 
-app.use('/api/user_quizzes/', userQuizRoutes); 
+app.use('/api/user_quizzes', userQuizRoutes); 
 
 
 const server = http.createServer(app);
