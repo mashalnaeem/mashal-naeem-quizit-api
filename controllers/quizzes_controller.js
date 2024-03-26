@@ -1,4 +1,4 @@
-const knex = require('knex'); 
+const knex = require("../knexfile");
 
 // Assuming you have a function to retrieve all quizzes
 async function getAllQuizzes(_req, res) {
@@ -31,7 +31,7 @@ async function fetchOneQuiz(req, res) {
             return res.status(404).json({ error: 'Quiz not found' });
         }
         res.status(200).json(quiz);
-        
+
     } catch (error) {
         console.error('Error fetching quiz:', error);
         res.status(400).json({ error: 'Failed to fetch quiz' });
