@@ -1,7 +1,7 @@
-const knex = require('knex'); // Import Knex instance (assuming it's already configured)
+const knex = require('knex'); 
 
 // Assuming you have a function to retrieve all quizzes
-async function getAllQuizzes(req, res) {
+async function getAllQuizzes(_req, res) {
     try {
         const quizzes = await knex('quizzes').select(
             'id',
@@ -13,8 +13,6 @@ async function getAllQuizzes(req, res) {
             'duration_minutes',
             'is_public',
             'image_url',
-            'created_at',
-            'updated_at'
             // Exclude 'questions' field
         );
         res.status(200).json(quizzes);
@@ -26,13 +24,14 @@ async function getAllQuizzes(req, res) {
 }
 
 async function fetchOneQuiz(req, res) {
-    const { quizId } = req.params; // Assuming quizId is passed in the URL parameters
+    const { quizId } = req.params; 
     try {
         const quiz = await knex('quizzes').where({ id: quizId }).first();
         if (!quiz) {
             return res.status(404).json({ error: 'Quiz not found' });
         }
         res.status(200).json(quiz);
+        
     } catch (error) {
         console.error('Error fetching quiz:', error);
         res.status(400).json({ error: 'Failed to fetch quiz' });
