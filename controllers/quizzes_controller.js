@@ -6,13 +6,7 @@ const getAllQuizzes = async(_req, res) => {
         const quizzes = await knex('quizzes').select(
             'id',
             'title',
-            'description',
             'category',
-            'difficulty',
-            'num_questions',
-            'duration_minutes',
-            'is_public',
-            'image_url',
             // Exclude 'questions' field
         );
         res.status(200).json(quizzes);
