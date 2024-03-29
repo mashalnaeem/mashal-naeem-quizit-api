@@ -30,9 +30,10 @@ const getOneUserQuizById = async (req, res) => {
       return res.status(404).json({ message: 'Quiz not found' });
     }
 
+    console.log("Quiz object retrieved:", quiz);
     // Respond with the quiz
     res.status(200).json(quiz);
-    
+   
   } catch (error) {
     console.error('Error fetching quiz:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -41,10 +42,11 @@ const getOneUserQuizById = async (req, res) => {
 
 const createUserQuiz = async (req, res) => {
   try {
-    const { title, description, category, difficulty, num_questions, duration_minutes, is_public, questions } = req.body;
+    const { title, description, category, difficulty, num_questions, duration_minutes, is_public, questions, userId } = req.body;
 
     // Insert the quiz data into the database
     const newUserQuiz = await knex('user_quizzes').insert({
+      user_id: userId,
       title,
       description,
       category,
