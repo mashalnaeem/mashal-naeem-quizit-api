@@ -10,21 +10,26 @@ exports.seed = async function(knex) {
 
 
 const usersData = [
-    {
-      id: 1,
-      username: 'johndoe',
-      email: 'johndoe@example.com',
-      password: 'password123',
-    //   created_at: new Date(),
-    //   updated_at: new Date()
-    },
-    {
-      id: 2,
-      username: 'janedoe',
-      email: 'janedoe@example.com',
-      password: 'securepass321',
-    //   created_at: new Date(),
-    //   updated_at: new Date()
-    }
-  ];
+  {
+    id: 1,
+    username: 'johndoe',
+    email: 'johndoe@example.com',
+    password: 'password123',
+    score: 0, 
+    quizzes_played: 0, 
+    created_at: new Date(),
+    updated_at: new Date()
+  },
+  {
+    id: 2,
+    username: 'janedoe',
+    email: 'janedoe@example.com',
+    password: 'securepass321',
+    score: 0,
+    quizzes_played: 0, 
+    created_at: new Date(),
+    updated_at: new Date()
+  }
+];
+
   

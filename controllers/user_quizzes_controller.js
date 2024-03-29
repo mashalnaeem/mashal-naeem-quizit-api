@@ -39,33 +39,31 @@ const getOneUserQuizById = async (req, res) => {
   }
 };
 
-// Controller function to create a new user quiz
 const createUserQuiz = async (req, res) => {
   try {
-    const { userId } = req.params;
-    const { title, description, category, difficulty, num_questions, duration_minutes, is_public, image_url, questions } = req.body;
+    const { title, description, category, difficulty, num_questions, duration_minutes, is_public, questions } = req.body;
 
-    // Create the new user quiz in the database
+    // Insert the quiz data into the database
     const newUserQuiz = await knex('user_quizzes').insert({
-      user_id: userId,
       title,
       description,
       category,
-      difficulty,
+      difficulty: JSON.stringify(difficulty),
       num_questions,
       duration_minutes,
       is_public,
-      image_url,
-      questions
-    }).returning('*');
+      questions: JSON.stringify(questions), // Store questions as JSON string
+    }).returning('id');
 
-    // Respond with the newly created user quiz
-    res.status(201).json(newUserQuiz);
+    const quizId = newUserQuiz[0];
+
+    res.status(201).json({ message: 'Quiz created successfully', quizId });
   } catch (error) {
     console.error('Error creating user quiz:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
 
 // Controller function to update a user quiz
 const updateUserQuiz = async (req, res) => {

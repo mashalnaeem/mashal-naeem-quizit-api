@@ -15,10 +15,10 @@ const userQuizzesData = [
     user_id: 1, // ID of the user who created the quiz
     title: 'My First Quiz',
     description: 'A simple quiz to get you started on your journey of creating quizzes!',
-    category: 'Science', 
+    category: 'General Knowledge', 
     difficulty: JSON.stringify([ 'Easy', 'Intermediate' , 'Hard' ]),
-    num_questions: 5,
-    duration_minutes: 8,
+    num_questions: 1,
+    duration_minutes: 1,
     is_public: true,
     image_url: 'https://example.com/my-first-quiz.jpg',
     questions: JSON.stringify([

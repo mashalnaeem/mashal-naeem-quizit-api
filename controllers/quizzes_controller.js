@@ -32,5 +32,30 @@ const fetchOneQuiz = async(req, res) => {
     }
 }
 
+const getQuestions = async(req, res) => {
+    const quizId = req.params.id;
 
-module.exports = { getAllQuizzes, fetchOneQuiz } 
+    try {
+        // Retrieve the quiz details, including its questions, from the database
+        const quiz = await knex('quizzes')
+            .where({ id: quizId })
+            .first();
+
+        if (!quiz) {
+            return res.status(404).json({ error: 'Quiz not found' });
+        }
+
+        // Extract questions from the quiz object
+        const questions = quiz.questions;
+
+        // Send the quiz questions in the response body
+        res.status(200).json(questions);
+    } catch (error) {
+        console.error('Error fetching quiz:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
+
+module.exports = { getAllQuizzes, fetchOneQuiz, getQuestions } 
