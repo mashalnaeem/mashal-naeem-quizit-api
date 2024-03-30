@@ -129,10 +129,10 @@ const updateUser = async (req, res) => {
 
         // If current_score is provided, update the user's current score and total score
         if (current_score !== undefined) {
-            await knex('users').where({ id: userId }).update({
-                current_score,
-                quizzes_played: knex.raw('quizzes_played + 1')
-            });
+            await knex('users').where({ id: userId }).update({ current_score });
+
+            // Increment the quizzes_played count by 1
+            await knex('users').where({ id: userId }).increment('quizzes_played', 1);
             await updateTotalScore(userId, current_score);
         }
 
