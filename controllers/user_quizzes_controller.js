@@ -29,8 +29,6 @@ const getOneUserQuizById = async (req, res) => {
     if (!quiz) {
       return res.status(404).json({ message: 'Quiz not found' });
     }
-
-    console.log("Quiz object retrieved:", quiz);
     // Respond with the quiz
     res.status(200).json(quiz);
    
@@ -71,7 +69,7 @@ const createUserQuiz = async (req, res) => {
 const updateUserQuiz = async (req, res) => {
   try {
     const { userId, quizId } = req.params;
-    const { title, description, category, difficulty, num_questions, duration_minutes, is_public, image_url, questions } = req.body;
+    const { title, description, category, difficulty, num_questions, duration_minutes, is_public, questions } = req.body;
 
     // Check if the quiz exists
     const existingQuiz = await knex('user_quizzes').where({ user_id: userId, id: quizId }).first();
@@ -84,12 +82,11 @@ const updateUserQuiz = async (req, res) => {
       title,
       description,
       category,
-      difficulty,
+      difficulty: JSON.stringify(difficulty),
       num_questions,
       duration_minutes,
       is_public,
-      image_url,
-      questions
+      questions: JSON.stringify(questions),
     });
 
     // Fetch the updated quiz

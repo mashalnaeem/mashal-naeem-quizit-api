@@ -166,7 +166,9 @@ const updateUser = async (req, res) => {
 // Controller function to delete a user
 const deleteUser = async (req, res) => {
     try {
-        const userId = req.params.userId;
+        const userId = req.params.id;
+
+        console.log(userId)
 
         // Check if the user exists
         const existingUser = await knex('users').where({ id: userId }).first();
