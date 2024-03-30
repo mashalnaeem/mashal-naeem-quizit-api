@@ -10,7 +10,8 @@ exports.up = function (knex) {
             table.string('username').notNullable();
             table.string('email').notNullable().unique();
             table.string('password').notNullable();
-            table.integer('score').defaultTo(0);
+            table.integer('current_score').defaultTo(0); 
+            table.integer('total_score').defaultTo(0);
             table.integer('quizzes_played').defaultTo(0);
             table.timestamps(true, true);
         })

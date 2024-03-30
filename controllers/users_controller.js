@@ -109,11 +109,7 @@ const createUser = async (req, res) => {
 // Update User Profile
 const updateUser = async (req, res) => {
     const userId = req.params.id;
-    const { username, email, existingPassword, newPassword } = req.body;
-
-    if (!username || !email || !existingPassword || !newPassword) {
-        return res.status(400).json({ error: 'Please provide username, email, existingPassword, and newPassword' });
-    }
+    const { username, email, existingPassword, newPassword, current_score } = req.body;
 
     try {
         // Retrieve user data from the database using Knex
@@ -124,22 +120,40 @@ const updateUser = async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        // Compare the provided existing password with the stored password
-        const passwordMatch = await bcrypt.compare(existingPassword, user.password);
-
-        if (!passwordMatch) {
-            return res.status(401).json({ error: 'Incorrect existing password' });
+        // If username, email, existingPassword, or newPassword is provided, 
+        // ensure all fields are present
+        if ((username || email || existingPassword || newPassword) &&
+            (!username || !email || !existingPassword || !newPassword)) {
+            return res.status(400).json({ error: 'Please provide username, email, existingPassword, and newPassword' });
         }
 
-        // Hash the new password
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        // If current_score is provided, update the user's current score and total score
+        if (current_score !== undefined) {
+            await knex('users').where({ id: userId }).update({
+                current_score,
+                quizzes_played: knex.raw('quizzes_played + 1')
+            });
+            await updateTotalScore(userId, current_score);
+        }
 
-        // Update the user's username, email, and password
-        await knex('users').where({ id: userId }).update({
-            username,
-            email,
-            password: hashedPassword // Fixed typo in password field name
-        });
+        // If username or password is provided, update username, email, and password
+        if (username || newPassword) {
+            // Compare the provided existing password with the stored password
+            const passwordMatch = await bcrypt.compare(existingPassword, user.password);
+            if (!passwordMatch) {
+                return res.status(401).json({ error: 'Incorrect existing password' });
+            }
+
+            // Hash the new password
+            const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+            // Update the user's username, email, and password
+            await knex('users').where({ id: userId }).update({
+                username,
+                email,
+                password: hashedPassword // Fixed typo in password field name
+            });
+        }
 
         res.status(200).json({ message: 'User profile updated successfully' });
 
@@ -148,7 +162,6 @@ const updateUser = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
-
 
 // Controller function to delete a user
 const deleteUser = async (req, res) => {
@@ -170,6 +183,22 @@ const deleteUser = async (req, res) => {
     } catch (error) {
         console.error('Error deleting user:', error);
         res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+// Controller function to update total score
+const updateTotalScore = async (userId, score) => {
+    try {
+        // Retrieve current user data
+        const user = await knex('users').where({ id: userId }).first();
+
+        // Calculate new total score
+        const totalScore = user.total_score + score;
+
+        // Update total score in the database
+        await knex('users').where({ id: userId }).update({ total_score: totalScore });
+    } catch (error) {
+        console.error('Error updating total score:', error);
     }
 };
 

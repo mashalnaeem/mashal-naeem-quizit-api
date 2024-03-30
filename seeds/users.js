@@ -15,8 +15,9 @@ const usersData = [
     username: 'johndoe',
     email: 'johndoe@example.com',
     password: 'password123',
-    score: 0, 
-    quizzes_played: 0, 
+    current_score: 0, 
+    total_score: 100,
+    quizzes_played: 2, 
     created_at: new Date(),
     updated_at: new Date()
   },
@@ -25,8 +26,9 @@ const usersData = [
     username: 'janedoe',
     email: 'janedoe@example.com',
     password: 'securepass321',
-    score: 0,
-    quizzes_played: 0, 
+    current_score: 100, 
+    total_score: 300,
+    quizzes_played: 4, 
     created_at: new Date(),
     updated_at: new Date()
   }
