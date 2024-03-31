@@ -7,6 +7,7 @@ const getAllQuizzes = async(_req, res) => {
             'id',
             'title',
             'category',
+            'num_questions'
             // Exclude 'questions' field
         );
         res.status(200).json(quizzes);
