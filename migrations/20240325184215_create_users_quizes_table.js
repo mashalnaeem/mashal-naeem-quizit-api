@@ -25,7 +25,6 @@ exports.up = function (knex) {
             table.integer('num_questions').unsigned();
             table.integer('duration_minutes').unsigned();
             table.boolean('is_public').defaultTo(true);
-            table.string('image_url');
             table.json('questions');
             table.timestamps(true, true);
         })
@@ -38,7 +37,6 @@ exports.up = function (knex) {
             table.integer('num_questions').unsigned();
             table.integer('duration_minutes').unsigned();
             table.boolean('is_public').defaultTo(true);
-            table.string('image_url');
             table.json('questions');
             table.timestamps(true, true);
         });

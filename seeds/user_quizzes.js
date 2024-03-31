@@ -16,11 +16,10 @@ const userQuizzesData = [
     title: 'My First Quiz',
     description: 'A simple quiz to get you started on your journey of creating quizzes!',
     category: 'General Knowledge', 
-    difficulty: JSON.stringify([ 'Easy', 'Intermediate' , 'Hard' ]),
+    difficulty: 'Intermediate', 
     num_questions: 1,
     duration_minutes: 1,
     is_public: true,
-    image_url: 'https://example.com/my-first-quiz.jpg',
     questions: JSON.stringify([
       {
         category: 'General Knowledge',
@@ -37,11 +36,10 @@ const userQuizzesData = [
     title: 'History Quiz',
     description: 'Explore the fascinating world of history with this engaging quiz!',
     category: 'Social Studies',
-    difficulty: JSON.stringify([ 'Easy', 'Intermediate' , 'Hard' ]),
+    difficulty: 'Easy', 
     num_questions: 7,
     duration_minutes: 12,
     is_public: false,
-    image_url: 'https://example.com/history-quiz.jpg',
     questions: JSON.stringify([
       {
         category: 'General Knowledge',

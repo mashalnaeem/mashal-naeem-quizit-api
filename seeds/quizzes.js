@@ -14,11 +14,10 @@ exports.seed = async function(knex) {
     title: 'General Knowledge Quiz',
     description: 'Test your knowledge on a wide range of topics with this exciting quiz!',
     category: 'General Knowledge',
-    difficulty: JSON.stringify([ 'Intermediate', 'Easy', 'Hard' ]),
+    difficulty: 'Hard',
     num_questions: 5,
     duration_minutes: 8,
     is_public: true,
-    image_url: 'https://example.com/general-knowledge-quiz.jpg',
     questions: JSON.stringify([
         {   
             id: 1,      
@@ -69,11 +68,10 @@ exports.seed = async function(knex) {
     title: 'Language Quiz',
     description: 'Test your knowledge on a wide range of topics with this exciting quiz!',
     category: 'Language',
-    difficulty: JSON.stringify([ 'Intermediate', 'Easy', 'Hard' ]),
+    difficulty: 'Intermediate', 
     num_questions: 9,
     duration_minutes: 10,
     is_public: true,
-    image_url: 'https://example.com/general-knowledge-quiz.jpg',
     questions: JSON.stringify([
         { 
             id: 1,
@@ -156,11 +154,10 @@ exports.seed = async function(knex) {
     title: 'Mathematics Quiz',
     description: 'Challenge yourself with a variety of math problems and puzzles in this fun quiz!',
     category: 'Mathematics',
-    difficulty: JSON.stringify([ 'Intermediate', 'Easy', 'Hard' ]),
+    difficulty: 'Easy',
     num_questions: 8,
     duration_minutes: 10,
     is_public: true,
-    image_url: 'https://example.com/math-quiz.jpg',
     questions: JSON.stringify([
         { 
             id: 1,
@@ -235,11 +232,10 @@ exports.seed = async function(knex) {
     title: 'Social Sciences Quiz',
     description: 'Challenge yourself with a variety of Social Sciences questions!',
     category: 'Social Sciences',
-    difficulty: JSON.stringify([ 'Intermediate', 'Easy', 'Hard' ]),
+    difficulty: 'Hard',
     num_questions: 8,
     duration_minutes: 10,
     is_public: true,
-    image_url: 'https://example.com/math-quiz.jpg',
     questions: JSON.stringify([
         { 
             id: 1,
@@ -313,11 +309,10 @@ exports.seed = async function(knex) {
     title: 'Technology Quiz',
     description: 'Challenge yourself with a variety of Technlogy questions!',
     category: 'Technology',
-    difficulty: JSON.stringify([ 'Intermediate', 'Easy', 'Hard' ]),
+    difficulty: 'Easy',
     num_questions: 6,
     duration_minutes: 8,
     is_public: true,
-    image_url: 'https://example.com/math-quiz.jpg',
     questions: JSON.stringify([
         { 
             id: 1,
@@ -375,11 +370,10 @@ exports.seed = async function(knex) {
     title: 'Science Quiz',
     description: 'Challenge yourself with a variety of Science questions!',
     category: 'Science',
-    difficulty: JSON.stringify([ 'Intermediate', 'Easy', 'Hard' ]),
+    difficulty: 'Intermediate',
     num_questions: 6,
     duration_minutes: 8,
     is_public: true,
-    image_url: 'https://example.com/math-quiz.jpg',
     questions: JSON.stringify([
         { 
             id: 1,
