@@ -1,71 +1,71 @@
-
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');
-
-require('dotenv').config();
-
-const PORT = process.env.PORT || 5050;
+const userRoutes = require('./routes/users_route.js');
+const quizRoutes = require('./routes/quizzes_route.js');
+const userQuizRoutes = require('./routes/user_quizzes_route.js');
 
 const app = express();
-app.use(cors());
+const server = http.createServer(app);
+
+// JSON config for post/update requests
 app.use(express.json());
 
-const server = http.createServer(app);
-const io = socketIo(server);
+// CORS config
+app.use(cors());
+require('dotenv').config();
+const PORT = process.env.PORT || 5050;
 
-// Define WebSocket event handlers
-io.on('connection', (socket) => {
-  console.log('A user connected');
+// Define CORS options
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200 
+};
 
-  // Example: Handle 'joinQuiz' event
-  socket.on('joinQuiz', (quizId) => {
-    // Logic to handle quiz joining
-    console.log(`User joined quiz ${quizId}`);
-    // Broadcast to other participants that a user joined
-    socket.broadcast.emit('userJoined', { quizId, userId: socket.id });
-  });
+// Use CORS middleware with custom options
+app.use(cors(corsOptions));
 
-  // Add more event handlers for other WebSocket events
+// const io = socketIo(server, {
+//   cors: {
+//       origin: 'http://localhost:3000',
+//       methods: ['GET', 'POST']
+//   }
+// });
 
-  // Handle disconnections
-  socket.on('disconnect', () => {
-    console.log('User disconnected');
-  });
-});
+// io.on('connection', (socket) => {
+//   console.log('A user connected');
+
+//   // Handle joining the quiz room
+//   socket.on('joinQuizRoom', (roomId) => {
+//       socket.join(roomId);
+//       console.log(`User joined Quiz Room ${roomId}`);
+//   });
+
+//   // Handle broadcasting quiz messages to the quiz room
+//   socket.on('quizMessage', (roomId, message) => {
+//       console.log(`Message received for Quiz Room ${roomId}: ${message}`);
+//       // Broadcast the message to the specific quiz room
+//       io.to(roomId).emit('quizMessage', message);
+//   });
+
+//   // Handle disconnect event
+//   socket.on('disconnect', () => {
+//       console.log('User disconnected');
+//   });
+// });
+
+// Routes
+app.use('/api/users', userRoutes);
+app.use('/api/quizzes', quizRoutes);
+app.use('/api/user_quizzes', userQuizRoutes);
 
 // Basic home route
 app.get('/', (req, res) => {
-  res.send('Welcome to my API');
+    res.send('Welcome to my API');
 });
 
 // Start the combined HTTP and WebSocket server
 server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+    console.log(`Server running at http://localhost:${PORT}`);
 });
-
-
-
-
-
-// const express = require('express');
-// const app = express();
-// const cors = require("cors");
-
-// require("dotenv").config();
-
-// const PORT = process.env.PORT || 5050;
-
-// app.use(cors());
-// app.use(express.json());
-
-// // basic home route
-// app.get('/', (req, res) => {
-//   res.send('Welcome to my API');
-// });
-
-
-// app.listen(PORT, () => {
-//   console.log(`running at http://localhost:${PORT}`);
-// });
