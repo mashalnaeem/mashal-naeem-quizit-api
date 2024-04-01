@@ -8,12 +8,6 @@ const userQuizRoutes = require('./routes/user_quizzes_route.js');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server, {
-    cors: {
-        origin: 'http://localhost:3000',
-        methods: ['GET', 'POST']
-    }
-});
 
 // JSON config for post/update requests
 app.use(express.json());
@@ -25,12 +19,41 @@ const PORT = process.env.PORT || 5050;
 
 // Define CORS options
 const corsOptions = {
-  origin: 'http://localhost:3000', // Change this to your frontend URL
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200 
 };
 
 // Use CORS middleware with custom options
 app.use(cors(corsOptions));
+
+// const io = socketIo(server, {
+//   cors: {
+//       origin: 'http://localhost:3000',
+//       methods: ['GET', 'POST']
+//   }
+// });
+
+// io.on('connection', (socket) => {
+//   console.log('A user connected');
+
+//   // Handle joining the quiz room
+//   socket.on('joinQuizRoom', (roomId) => {
+//       socket.join(roomId);
+//       console.log(`User joined Quiz Room ${roomId}`);
+//   });
+
+//   // Handle broadcasting quiz messages to the quiz room
+//   socket.on('quizMessage', (roomId, message) => {
+//       console.log(`Message received for Quiz Room ${roomId}: ${message}`);
+//       // Broadcast the message to the specific quiz room
+//       io.to(roomId).emit('quizMessage', message);
+//   });
+
+//   // Handle disconnect event
+//   socket.on('disconnect', () => {
+//       console.log('User disconnected');
+//   });
+// });
 
 // Routes
 app.use('/api/users', userRoutes);
