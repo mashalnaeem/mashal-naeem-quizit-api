@@ -21,7 +21,7 @@ exports.up = function (knex) {
             table.string('title').notNullable();
             table.text('description');
             table.string('category');
-            table.json('difficulty');
+            table.string('difficulty');
             table.integer('num_questions').unsigned();
             table.integer('duration_minutes').unsigned();
             table.boolean('is_public').defaultTo(true);
@@ -33,7 +33,7 @@ exports.up = function (knex) {
             table.string('title').notNullable();
             table.text('description');
             table.string('category');
-            table.json('difficulty');
+            table.string('difficulty');
             table.integer('num_questions').unsigned();
             table.integer('duration_minutes').unsigned();
             table.boolean('is_public').defaultTo(true);

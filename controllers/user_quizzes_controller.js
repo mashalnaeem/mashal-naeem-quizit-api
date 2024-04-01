@@ -48,7 +48,7 @@ const createUserQuiz = async (req, res) => {
       title,
       description,
       category,
-      difficulty: JSON.stringify(difficulty),
+      difficulty,
       num_questions,
       duration_minutes,
       is_public,
