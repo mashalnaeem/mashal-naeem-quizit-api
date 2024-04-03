@@ -39,53 +39,63 @@ git clone <repository-url>
 cd quizIt-api
 npm install
 cp .env.example .env
+npm instal knex mysql2
 npx knex migrate:latest
+npx knex seed:run
 ```
-## API References
+# API References
 
-### Quiz Endpoints
+## Quiz Endpoints
+- **GET /quizzes**: Get all quizzes from the database.
+- **GET /quizzes/:id**: Get a specific quiz by its ID.
+- **GET /quizzes/:id/questions**: Get all questions for a specific quiz.
+- **POST /quizzes/:userId**: Create a new quiz for a user.
+- **PUT /quizzes/:userId/:quizId**: Update an existing quiz for a user by its ID.
+- **DELETE /quizzes/:userId/:quizId**: Delete a quiz for a user by its ID.
 
-- **GET /quizzes**: Get all quizzes
-- **GET /quizzes/:id**: Get a quiz by ID
-- **GET /quizzes/:id/questions**: Get questions for a quiz
-- **POST /quizzes/:userId**: Create a new quiz for a user
-- **PUT /quizzes/:userId/:quizId**: Update a quiz for a user by ID
-- **DELETE /quizzes/:userId/:quizId**: Delete a quiz for a user by ID
+## User Quiz Endpoints
+- **GET /user_quizzes/:userId**: Get all user quizzes by user ID.
+- **GET /user_quizzes/:userId/:quizId**: Get a specific user quiz by user ID and quiz ID.
+- **POST /user_quizzes/:userId**: Create a user quiz.
+- **PUT /user_quizzes/:userId/:quizId**: Update a user quiz.
+- **DELETE /user_quizzes/:userId/:quizId**: Delete a user quiz.
 
-### User Quiz Endpoints
+## User Endpoints
+- **POST /users/register**: Register a new user.
+- **POST /users/login**: Authenticate user login.
+- **GET /users/:id**: Get user by ID.
+- **PUT /users/:id**: Update user by ID.
+- **DELETE /users/:id**: Delete user by ID.
 
-- **GET /user_quizzes/:userId**: Get all user quizzes by user ID
-- **GET /user_quizzes/:userId/:quizId**: Get one user quiz by user ID and quiz ID
-- **POST /user_quizzes/:userId**: Create a user quiz
-- **PUT /user_quizzes/:userId/:quizId**: Update a user quiz
-- **DELETE /user_quizzes/:userId/:quizId**: Delete a user quiz
-
-### User Endpoints
-
-- **POST /users/register**: Register a new user
-- **POST /users/login**: Authenticate user login
-- **GET /users/:id**: Get user by ID
-- **PUT /users/:id**: Update user by ID
-- **DELETE /users/:id**: Delete user by ID
-
-## Screenshots
+# Screenshots
 
 No screenshots available.
 
-## Lessons Learned & Next Steps
+# Lessons Learned & Next Steps
 
-During the development process, attempts were made to implement socket functionality for real-time updates, but it was unsuccessful.
+During the development process, I encountered challenges with running seed files due to foreign key constraints. As a workaround, I had to run each seed file individually, starting with the users file and then the user quizzes file.
 
-### Lessons Learned
-- Importance of thorough planning and testing for implementing advanced functionalities like sockets
-- Consideration of alternative approaches for real-time updates
+I also faced difficulties with implementing socket functionality for real-time updates. Despite attempts, I encountered issues with establishing a connection and transmitting data effectively. However, I am committed to resolving these issues and continue to work towards implementing this feature.
 
-### Next Steps
-- Further investigation and implementation of socket functionality
-- Enhance API documentation and error handling
-- Implement additional features such as user roles and leaderboard
+Additionally, I aim to enhance the user experience by implementing the following features:
+- Users will have the ability to upload and set thumbnail avatars for their profiles.
+- Users can customize cover photos for their quizzes, adding a personal touch to their creations.
+- Implement privacy settings, allowing users to dictate the visibility of their quizzes and specify which users or user types can access them.
 
-## Frontend Repository
+## Lessons Learned
+- Importance of understanding database constraints and their impact on seeding data.
+- Challenges involved in implementing advanced functionalities like sockets.
+- Flexibility in adapting to challenges and finding alternative solutions.
 
-[Frontend Repository](<https://github.com/mashalnaeem/mashal-naeem-quizit>)
+## Next Steps
+- Further investigation and implementation of socket functionality.
+- Enhance API documentation and error handling.
+- Implement additional features such as user roles and leaderboard.
+
+
+# Frontend Repository
+
+[Frontend Repository](https://github.com/mashalnaeem/mashal-naeem-quizit)
+
+
 
